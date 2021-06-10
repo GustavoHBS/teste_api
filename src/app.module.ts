@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ExamModule } from './exam/exam.module';
 import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from './database/database.module';
 @Module({
-  imports: [ConfigModule.forRoot(), ExamModule],
+  imports: [ConfigModule.forRoot(), DatabaseModule, ExamModule],
 })
 export class AppModule {}
