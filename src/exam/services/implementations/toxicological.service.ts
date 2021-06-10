@@ -1,10 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ExamDocument } from 'src/database/entities/exams.entity';
 import { IToxicologicalCutRecord } from 'src/exam/interfaces/toxicologicalCutRecord.interface';
+import { IExamsModel } from 'src/exam/models/examsModel.interface';
 import { IToxicologicalSample } from '../../interfaces/toxicologicalSample.interface';
 import { IToxicologicalService } from '../toxicologicalService.interface';
 
 @Injectable()
 export class toxicologicalService implements IToxicologicalService {
+  constructor(@Inject('ExamsModel') private examsModel: IExamsModel) {}
+
   private readonly CUT_RECORD: IToxicologicalCutRecord = {
     Cocaína: 0.5,
     Anfetamina: 0.2,
@@ -17,8 +21,9 @@ export class toxicologicalService implements IToxicologicalService {
     Heroína: 0.2,
   };
 
-  async processExam(sample: IToxicologicalSample) {
+  processExam(sample: IToxicologicalSample) {
     const isPositiveSample = this.hasDrugsInSample(sample);
+    this.saveExam(sample, isPositiveSample);
     return {
       codigo_amostra: sample.codigo_amostra,
       amostraPositiva: isPositiveSample,
@@ -44,5 +49,12 @@ export class toxicologicalService implements IToxicologicalService {
       sample.Cocaetileno >= COCAINE_MIN_CONCENTRATION ||
       sample.Norcocaína >= COCAINE_MIN_CONCENTRATION
     );
+  }
+
+  private saveExam(
+    sample: IToxicologicalSample,
+    isPositiveSample: boolean,
+  ): Promise<ExamDocument> {
+    return this.examsModel.create(sample, isPositiveSample);
   }
 }
