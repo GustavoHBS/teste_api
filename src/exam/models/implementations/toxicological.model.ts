@@ -27,4 +27,14 @@ export class ToxicologicalModel implements IToxicologicalModel {
     const exam = new this.examsEntity(examDto);
     return exam.save();
   }
+
+  async findAll(){
+    return this.examsEntity.find();
+  }
+
+  async findByCodigoAmostra(sampleCod: string){
+    return this.examsEntity.findOne({
+      codigo_amostra: sampleCod
+    });
+  }
 }

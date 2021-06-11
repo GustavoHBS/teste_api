@@ -6,4 +6,9 @@ export interface IToxicologicalModel {
     sample: IToxicologicalSample,
     isPositveSample: boolean,
   ): Promise<ExamToxicologicalDocument>;
+
+  
+  findAll(): Promise<ExamToxicologicalDocument[] | undefined>;
+
+  findByCodigoAmostra(sampleCod: string): Promise<ExamToxicologicalDocument | undefined>;
 }

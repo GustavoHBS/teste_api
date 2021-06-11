@@ -10,10 +10,9 @@ import { IToxicologicalService } from '../toxicologicalService.interface';
 @Injectable()
 export class toxicologicalService implements IToxicologicalService {
   constructor(
-    @InjectConnection() private connection: Connection,
     @Inject('ToxicologicalModel') private examsModel: IToxicologicalModel,
   ) {}
-
+  
   private readonly CUT_RECORD: IToxicologicalCutRecord = {
     Cocaína: 0.5,
     Anfetamina: 0.2,
@@ -61,5 +60,18 @@ export class toxicologicalService implements IToxicologicalService {
     isPositiveSample: boolean,
   ): Promise<ExamToxicologicalDocument> {
     return this.examsModel.create(sample, isPositiveSample);
+  }
+
+  async findAllExams(): Promise<any> {
+    const exams = await this.examsModel.findAll();
+    return exams || [];
+  }
+
+  async findExamByCodigoAmostra(sampleCod: string): Promise<any> {
+    const exam = await this.examsModel.findByCodigoAmostra(sampleCod);
+    if(!exam){
+      throw new Error("Nenhuma exame foi encontrado para o codigo enviado.");
+    }
+    return exam;
   }
 }

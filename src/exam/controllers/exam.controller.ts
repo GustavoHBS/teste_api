@@ -1,4 +1,5 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, Post, Response as ResponseDecorator } from '@nestjs/common';
+import { Response } from 'express';
 import { IToxicologicalSample } from '../interfaces/toxicologicalSample.interface';
 import { IToxicologicalService } from '../services/toxicologicalService.interface';
 
@@ -12,5 +13,15 @@ export class ExamController {
   @Post('/toxicological')
   toxicologicalExam(@Body() toxicologicalSample: IToxicologicalSample): any {
     return this.toxicologicalService.processExam(toxicologicalSample);
+  }
+
+  @Get('/toxicological')
+  findToxicologicalExams(): any {
+    return this.toxicologicalService.findAllExams();
+  }
+
+  @Get('/toxicological/:sampleCod')
+  findToxicologicalExamByCodigoAmostra(@Param() params: any, @ResponseDecorator() res: Response): any {
+    return this.toxicologicalService.findExamByCodigoAmostra(params.sampleCod).catch(err => res.status(404).send({message: err.message}));
   }
 }
