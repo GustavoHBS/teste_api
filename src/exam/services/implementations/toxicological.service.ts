@@ -1,4 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { InjectConnection } from '@nestjs/mongoose';
+import { Connection } from 'mongoose';
 import { ExamDocument } from 'src/database/entities/exams.entity';
 import { IToxicologicalCutRecord } from 'src/exam/interfaces/toxicologicalCutRecord.interface';
 import { IExamsModel } from 'src/exam/models/examsModel.interface';
@@ -7,7 +9,10 @@ import { IToxicologicalService } from '../toxicologicalService.interface';
 
 @Injectable()
 export class toxicologicalService implements IToxicologicalService {
-  constructor(@Inject('ExamsModel') private examsModel: IExamsModel) {}
+  constructor(
+    @InjectConnection() private connection: Connection,
+    @Inject('ExamsModel') private examsModel: IExamsModel,
+  ) {}
 
   private readonly CUT_RECORD: IToxicologicalCutRecord = {
     Cocaína: 0.5,

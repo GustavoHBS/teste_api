@@ -4,7 +4,6 @@ import { Document, Model } from 'mongoose';
 
 export type ExamDocument = ExamsEntity & Document;
 
-@Injectable()
 @Schema({
   collection: 'exams',
 })
@@ -13,7 +12,7 @@ export class ExamsEntity {
     unique: true,
     required: true,
   })
-  codigo_acesso: string;
+  codigo_amostra: string;
 
   @Prop({
     required: true,

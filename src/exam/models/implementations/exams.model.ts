@@ -23,6 +23,7 @@ export class ExamsModel implements IExamsModel {
       amostraPositiva: isPositveSample,
       amostra: sample,
     };
+    console.log(examDto)
     const exam = new this.examsEntity(examDto);
     return exam.save();
   }
