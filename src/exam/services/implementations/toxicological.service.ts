@@ -2,6 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { ExamToxicologicalDocument } from 'src/database/entities/examsToxicological.entity';
+import { ToxicologicalMapper } from 'src/exam/formatters/toxicological.formatter';
+import { IProcessToxicologicalResponse } from 'src/exam/interfaces/processToxicologicalResponse.interface';
 import { IToxicologicalCutRecord } from 'src/exam/interfaces/toxicologicalCutRecord.interface';
 import { IToxicologicalModel } from 'src/exam/models/toxicologicalModel.interface';
 import { IToxicologicalSample } from '../../interfaces/toxicologicalSample.interface';
@@ -12,7 +14,7 @@ export class toxicologicalService implements IToxicologicalService {
   constructor(
     @Inject('ToxicologicalModel') private examsModel: IToxicologicalModel,
   ) {}
-  
+
   private readonly CUT_RECORD: IToxicologicalCutRecord = {
     Cocaína: 0.5,
     Anfetamina: 0.2,
@@ -25,7 +27,7 @@ export class toxicologicalService implements IToxicologicalService {
     Heroína: 0.2,
   };
 
-  processExam(sample: IToxicologicalSample) {
+  processExam(sample: IToxicologicalSample): IProcessToxicologicalResponse {
     const isPositiveSample = this.hasDrugsInSample(sample);
     this.saveExam(sample, isPositiveSample);
     return {
@@ -64,14 +66,14 @@ export class toxicologicalService implements IToxicologicalService {
 
   async findAllExams(): Promise<any> {
     const exams = await this.examsModel.findAll();
-    return exams || [];
+    return exams ? exams.map(ToxicologicalMapper.documentToDto) : [];
   }
 
-  async findExamByCodigoAmostra(sampleCod: string): Promise<any> {
+  async findExamByCodigoAmostra(sampleCod: string) {
     const exam = await this.examsModel.findByCodigoAmostra(sampleCod);
-    if(!exam){
-      throw new Error("Nenhuma exame foi encontrado para o codigo enviado.");
+    if (!exam) {
+      throw new Error('Nenhuma exame foi encontrado para o codigo enviado.');
     }
-    return exam;
+    return ToxicologicalMapper.documentToDto(exam);
   }
 }

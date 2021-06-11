@@ -11,7 +11,8 @@ import { IToxicologicalModel } from '../toxicologicalModel.interface';
 @Injectable()
 export class ToxicologicalModel implements IToxicologicalModel {
   constructor(
-    @InjectModel(ExamsToxicologicalEntity.name) private examsEntity: Model<ExamToxicologicalDocument>,
+    @InjectModel(ExamsToxicologicalEntity.name)
+    private examsEntity: Model<ExamToxicologicalDocument>,
   ) {}
 
   create(
@@ -23,18 +24,17 @@ export class ToxicologicalModel implements IToxicologicalModel {
       amostraPositiva: isPositveSample,
       amostra: sample,
     };
-    console.log(examDto)
     const exam = new this.examsEntity(examDto);
     return exam.save();
   }
 
-  async findAll(){
+  async findAll() {
     return this.examsEntity.find();
   }
 
-  async findByCodigoAmostra(sampleCod: string){
+  async findByCodigoAmostra(sampleCod: string) {
     return this.examsEntity.findOne({
-      codigo_amostra: sampleCod
+      codigo_amostra: sampleCod,
     });
   }
 }
