@@ -3,21 +3,21 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { IToxicologicalSample } from 'src/exam/interfaces/toxicologicalSample.interface';
 import {
-  ExamsEntity,
-  ExamDocument,
-} from '../../../database/entities/exams.entity';
-import { IExamsModel } from '../examsModel.interface';
+  ExamsToxicologicalEntity,
+  ExamToxicologicalDocument,
+} from '../../../database/entities/examsToxicological.entity';
+import { IToxicologicalModel } from '../toxicologicalModel.interface';
 
 @Injectable()
-export class ExamsModel implements IExamsModel {
+export class ToxicologicalModel implements IToxicologicalModel {
   constructor(
-    @InjectModel(ExamsEntity.name) private examsEntity: Model<ExamDocument>,
+    @InjectModel(ExamsToxicologicalEntity.name) private examsEntity: Model<ExamToxicologicalDocument>,
   ) {}
 
   create(
     sample: IToxicologicalSample,
     isPositveSample: boolean,
-  ): Promise<ExamDocument> {
+  ): Promise<ExamToxicologicalDocument> {
     const examDto = {
       codigo_amostra: sample.codigo_amostra,
       amostraPositiva: isPositveSample,

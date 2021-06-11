@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import { ExamDocument } from 'src/database/entities/exams.entity';
+import { ExamToxicologicalDocument } from 'src/database/entities/examsToxicological.entity';
 import { IToxicologicalCutRecord } from 'src/exam/interfaces/toxicologicalCutRecord.interface';
-import { IExamsModel } from 'src/exam/models/examsModel.interface';
+import { IToxicologicalModel } from 'src/exam/models/toxicologicalModel.interface';
 import { IToxicologicalSample } from '../../interfaces/toxicologicalSample.interface';
 import { IToxicologicalService } from '../toxicologicalService.interface';
 
@@ -11,7 +11,7 @@ import { IToxicologicalService } from '../toxicologicalService.interface';
 export class toxicologicalService implements IToxicologicalService {
   constructor(
     @InjectConnection() private connection: Connection,
-    @Inject('ExamsModel') private examsModel: IExamsModel,
+    @Inject('ToxicologicalModel') private examsModel: IToxicologicalModel,
   ) {}
 
   private readonly CUT_RECORD: IToxicologicalCutRecord = {
@@ -59,7 +59,7 @@ export class toxicologicalService implements IToxicologicalService {
   private saveExam(
     sample: IToxicologicalSample,
     isPositiveSample: boolean,
-  ): Promise<ExamDocument> {
+  ): Promise<ExamToxicologicalDocument> {
     return this.examsModel.create(sample, isPositiveSample);
   }
 }

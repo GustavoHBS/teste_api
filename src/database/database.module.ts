@@ -1,15 +1,22 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ExamsEntity, examsSchema } from './entities/exams.entity';
+import { ExamsToxicologicalEntity, examsToxicologicalSchema } from './entities/examsToxicological.entity';
 
-console.log(process.env.DATABASE_URL)
+const entities = MongooseModule.forFeature([
+  {
+    name: ExamsToxicologicalEntity.name,
+    schema: examsToxicologicalSchema,
+  },
+]);
+
 @Module({
   imports: [
     MongooseModule.forRootAsync({
       useFactory: () => ({ uri: process.env.DATABASE_URL})
     }),
+    entities
   ],
-  // providers: [ExamsEntity],
-  // exports: [ExamsEntity],
+  providers: [],
+  exports: [entities],
 })
 export class DatabaseModule {}
