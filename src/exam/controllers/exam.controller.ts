@@ -20,6 +20,7 @@ export class ExamController {
     private toxicologicalService: IToxicologicalService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post('/toxicological')
   toxicologicalExam(@Body() toxicologicalSample: IToxicologicalSample): any {
     return this.toxicologicalService.processExam(toxicologicalSample);
