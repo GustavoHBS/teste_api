@@ -6,8 +6,10 @@ import {
   Param,
   Post,
   Response as ResponseDecorator,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { JwtAuthGuard } from 'src/base/guards/jwt-auth.guard';
 import { IToxicologicalSample } from '../interfaces/toxicologicalSample.interface';
 import { IToxicologicalService } from '../services/toxicologicalService.interface';
 
@@ -23,11 +25,13 @@ export class ExamController {
     return this.toxicologicalService.processExam(toxicologicalSample);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/toxicological')
   findToxicologicalExams(): any {
     return this.toxicologicalService.findAllExams();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/toxicological/:sampleCod')
   async findToxicologicalExamByCodigoAmostra(
     @Param() params: any,
