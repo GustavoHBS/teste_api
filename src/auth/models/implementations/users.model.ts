@@ -14,17 +14,18 @@ export class UsersModel implements IUsersModel {
     private usersEntity: Model<UsersDocument>,
   ) {}
 
-  create(name: string, password: string): Promise<UsersDocument> {
+  create(username: string, password: string): Promise<UsersDocument> {
+    console.log(username, password);
     const newUser = new this.usersEntity({
-      name,
+      username,
       password,
     });
     return newUser.save();
   }
 
-  async findByName(name: string): Promise<UsersDocument | undefined> {
+  async findByUsername(username: string): Promise<UsersDocument | undefined> {
     return this.usersEntity.findOne({
-      name,
+      username,
     });
   }
 }

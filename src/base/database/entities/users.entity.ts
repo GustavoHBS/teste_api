@@ -9,8 +9,9 @@ export type UsersDocument = UsersEntity & Document;
 export class UsersEntity {
   @Prop({
     required: true,
+    unique: true,
   })
-  name: string;
+  username: string;
 
   @Prop({
     required: true,

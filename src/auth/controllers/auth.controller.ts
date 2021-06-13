@@ -1,13 +1,20 @@
-import { Controller, Request, Post, UseGuards, Body } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Post,
+  UseGuards,
+  Body,
+  Inject,
+} from '@nestjs/common';
 import { LocalAuthGuard } from 'src/base/guards/local-auth.guard';
-import { AuthService } from '../services/auth.service';
-import { UsersService } from '../services/users.service';
+import { IAuthService } from '../services/authService.interface';
+import { IUsersService } from '../services/usersService.interface';
 
 @Controller()
 export class AuthController {
   constructor(
-    private authService: AuthService,
-    private userService: UsersService,
+    @Inject('AuthService') private authService: IAuthService,
+    @Inject('UsersService') private userService: IUsersService,
   ) {}
 
   @UseGuards(LocalAuthGuard)
@@ -18,7 +25,6 @@ export class AuthController {
 
   @Post('auth/create')
   async create(@Body() body) {
-    console.log(body);
-    return this.userService.create(body.name, body.password);
+    return this.userService.create(body.username, body.password);
   }
 }
