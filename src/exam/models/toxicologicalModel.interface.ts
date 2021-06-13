@@ -1,4 +1,4 @@
-import { ExamToxicologicalDocument } from 'src/database/entities/examsToxicological.entity';
+import { ExamToxicologicalDocument } from 'src/base/database/entities/examsToxicological.entity';
 import { IToxicologicalSample } from '../interfaces/toxicologicalSample.interface';
 
 export interface IToxicologicalModel {
@@ -7,8 +7,9 @@ export interface IToxicologicalModel {
     isPositveSample: boolean,
   ): Promise<ExamToxicologicalDocument>;
 
-  
   findAll(): Promise<ExamToxicologicalDocument[] | undefined>;
 
-  findByCodigoAmostra(sampleCod: string): Promise<ExamToxicologicalDocument | undefined>;
+  findByCodigoAmostra(
+    sampleCod: string,
+  ): Promise<ExamToxicologicalDocument | undefined>;
 }

@@ -5,7 +5,7 @@ import { IToxicologicalSample } from 'src/exam/interfaces/toxicologicalSample.in
 import {
   ExamsToxicologicalEntity,
   ExamToxicologicalDocument,
-} from '../../../database/entities/examsToxicological.entity';
+} from '../../../base/database/entities/examsToxicological.entity';
 import { IToxicologicalModel } from '../toxicologicalModel.interface';
 
 @Injectable()

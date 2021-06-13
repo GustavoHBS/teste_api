@@ -1,4 +1,4 @@
-import { ExamToxicologicalDocument } from 'src/database/entities/examsToxicological.entity';
+import { ExamToxicologicalDocument } from 'src/base/database/entities/examsToxicological.entity';
 import { IExamToxicologicalDTO } from '../interfaces/examToxicologicalDTO.interface';
 
 export class ToxicologicalMapper {

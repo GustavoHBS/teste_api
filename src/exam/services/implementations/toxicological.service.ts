@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
-import { ExamToxicologicalDocument } from 'src/database/entities/examsToxicological.entity';
+import { ExamToxicologicalDocument } from 'src/base/database/entities/examsToxicological.entity';
 import { ToxicologicalMapper } from 'src/exam/formatters/toxicological.formatter';
 import { IProcessToxicologicalResponse } from 'src/exam/interfaces/processToxicologicalResponse.interface';
 import { IToxicologicalCutRecord } from 'src/exam/interfaces/toxicologicalCutRecord.interface';

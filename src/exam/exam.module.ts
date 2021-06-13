@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/database/database.module';
+import { DatabaseModule } from 'src/base/database/database.module';
 import { ExamController } from './controllers/exam.controller';
 import { ToxicologicalModel } from './models/implementations/toxicological.model';
 import { toxicologicalService } from './services/implementations/toxicological.service';
