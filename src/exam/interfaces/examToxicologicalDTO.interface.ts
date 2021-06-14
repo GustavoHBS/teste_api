@@ -1,7 +1,7 @@
-import { IToxicologicalSample } from "./toxicologicalSample.interface";
+import { IToxicologicalSample } from './toxicologicalSample.interface';
 
 export interface IExamToxicologicalDTO {
-  codigo_amostra: string;
+  codigoAmostra: string;
   amostraPositiva: boolean;
   amostra: IToxicologicalSample;
 }

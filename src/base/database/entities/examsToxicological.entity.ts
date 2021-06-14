@@ -8,10 +8,9 @@ export type ExamToxicologicalDocument = ExamsToxicologicalEntity & Document;
 })
 export class ExamsToxicologicalEntity {
   @Prop({
-    unique: true,
     required: true,
   })
-  codigo_amostra: string;
+  codigoAmostra: string;
 
   @Prop({
     required: true,
@@ -24,4 +23,6 @@ export class ExamsToxicologicalEntity {
   amostra: any;
 }
 
-export const examsToxicologicalSchema = SchemaFactory.createForClass(ExamsToxicologicalEntity);
+export const examsToxicologicalSchema = SchemaFactory.createForClass(
+  ExamsToxicologicalEntity,
+);

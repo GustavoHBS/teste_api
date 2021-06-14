@@ -20,7 +20,9 @@ const entities = MongooseModule.forFeature([
 @Module({
   imports: [
     MongooseModule.forRootAsync({
-      useFactory: () => ({ uri: process.env.DATABASE_URL }),
+      useFactory: () => ({
+        uri: process.env.DATABASE_URL,
+      }),
     }),
     entities,
   ],

@@ -3,7 +3,9 @@ import { IProcessToxicologicalResponse } from '../interfaces/processToxicologica
 import { IToxicologicalSample } from '../interfaces/toxicologicalSample.interface';
 
 export interface IToxicologicalService {
-  processExam(sample: IToxicologicalSample): IProcessToxicologicalResponse;
+  processExam(
+    sample: IToxicologicalSample,
+  ): Promise<IProcessToxicologicalResponse>;
   findAllExams(): Promise<IExamToxicologicalDTO[]>;
   findExamByCodigoAmostra(sampleCod: string): Promise<IExamToxicologicalDTO>;
 }

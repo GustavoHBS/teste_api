@@ -1,4 +1,4 @@
 export interface IProcessToxicologicalResponse {
-  codigo_amostra: string;
+  codigoAmostra: string;
   amostraPositiva: boolean;
 }

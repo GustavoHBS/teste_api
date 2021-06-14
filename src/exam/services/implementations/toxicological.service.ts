@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection } from 'mongoose';
 import { ExamToxicologicalDocument } from 'src/base/database/entities/examsToxicological.entity';
-import { ToxicologicalMapper } from 'src/exam/formatters/toxicological.formatter';
+import { ToxicologicalFormatter } from 'src/exam/formatters/toxicological.formatter';
 import { IProcessToxicologicalResponse } from 'src/exam/interfaces/processToxicologicalResponse.interface';
 import { IToxicologicalCutRecord } from 'src/exam/interfaces/toxicologicalCutRecord.interface';
 import { IToxicologicalModel } from 'src/exam/models/toxicologicalModel.interface';
@@ -27,11 +27,13 @@ export class toxicologicalService implements IToxicologicalService {
     Heroína: 0.2,
   };
 
-  processExam(sample: IToxicologicalSample): IProcessToxicologicalResponse {
+  async processExam(
+    sample: IToxicologicalSample,
+  ): Promise<IProcessToxicologicalResponse> {
     const isPositiveSample = this.hasDrugsInSample(sample);
-    this.saveExam(sample, isPositiveSample);
+    await this.saveExam(sample, isPositiveSample);
     return {
-      codigo_amostra: sample.codigo_amostra,
+      codigoAmostra: sample.codigo_amostra,
       amostraPositiva: isPositiveSample,
     };
   }
@@ -66,7 +68,7 @@ export class toxicologicalService implements IToxicologicalService {
 
   async findAllExams(): Promise<any> {
     const exams = await this.examsModel.findAll();
-    return exams ? exams.map(ToxicologicalMapper.documentToDto) : [];
+    return exams ? exams.map(ToxicologicalFormatter.documentToDto) : [];
   }
 
   async findExamByCodigoAmostra(sampleCod: string) {
@@ -74,6 +76,6 @@ export class toxicologicalService implements IToxicologicalService {
     if (!exam) {
       throw new Error('Nenhuma exame foi encontrado para o codigo enviado.');
     }
-    return ToxicologicalMapper.documentToDto(exam);
+    return ToxicologicalFormatter.documentToDto(exam);
   }
 }

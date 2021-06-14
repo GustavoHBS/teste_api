@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { ToxicologicalFormatter } from 'src/exam/formatters/toxicological.formatter';
 import { IToxicologicalSample } from 'src/exam/interfaces/toxicologicalSample.interface';
 import {
   ExamsToxicologicalEntity,
@@ -15,16 +16,16 @@ export class ToxicologicalModel implements IToxicologicalModel {
     private examsEntity: Model<ExamToxicologicalDocument>,
   ) {}
 
-  create(
+  async create(
     sample: IToxicologicalSample,
     isPositveSample: boolean,
   ): Promise<ExamToxicologicalDocument> {
-    const examDto = {
-      codigo_amostra: sample.codigo_amostra,
-      amostraPositiva: isPositveSample,
-      amostra: sample,
-    };
-    const exam = new this.examsEntity(examDto);
+    await this.validateCodigoAmostra(sample.codigo_amostra);
+    const examDoc = ToxicologicalFormatter.sampleToDocument(
+      sample,
+      isPositveSample,
+    );
+    const exam = new this.examsEntity(examDoc);
     return exam.save();
   }
 
@@ -34,7 +35,18 @@ export class ToxicologicalModel implements IToxicologicalModel {
 
   async findByCodigoAmostra(sampleCod: string) {
     return this.examsEntity.findOne({
-      codigo_amostra: sampleCod,
+      codigoAmostra: sampleCod,
     });
+  }
+
+  private async validateCodigoAmostra(
+    sampleCod: string,
+  ): Promise<void | never> {
+    const result = await this.findByCodigoAmostra(sampleCod);
+    if (result) {
+      throw new BadRequestException({
+        message: 'Esse codigo de amostra já foi cadastrado, use outro.',
+      });
+    }
   }
 }
