@@ -17,7 +17,7 @@ import { LocalStrategy } from './strategy/local.strategy';
       useFactory: () => ({
         secret: process.env.AUTH_SECRET_KEY,
         signOptions: {
-          expiresIn: '180s',
+          expiresIn: process.env.EXPIRATION_TIME,
         },
       }),
     }),
