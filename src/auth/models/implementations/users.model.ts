@@ -15,7 +15,6 @@ export class UsersModel implements IUsersModel {
   ) {}
 
   create(username: string, password: string): Promise<UsersDocument> {
-    console.log(username, password);
     const newUser = new this.usersEntity({
       username,
       password,
