@@ -5,6 +5,10 @@ import { toxicologicalService } from 'src/exam/services/implementations/toxicolo
 
 describe('ToxicologicalService', () => {
   let toxicService: toxicologicalService;
+  const examsMocked = [
+    { codigo_amostra: '1', amostraPositiva: true },
+    { codigo_amostra: '2', amostraPositiva: false },
+  ];
   const emptySample = {
     codigo_amostra: '1',
     Cocaína: 0,
@@ -32,8 +36,12 @@ describe('ToxicologicalService', () => {
       .overrideProvider(ToxicologicalModel)
       .useValue({
         create() {},
-        findAll() {},
-        findByCodigoAmostra() {},
+        findAll() {
+          return examsMocked;
+        },
+        findByCodigoAmostra(codigo: any) {
+          return examsMocked.find(exam => exam.codigo_amostra == codigo);
+        },
       })
       .compile();
 
@@ -220,6 +228,30 @@ describe('ToxicologicalService', () => {
       sample.Cocaína = 0.4;
       const result = toxicService.processExam(sample);
       expect(result.amostraPositiva).toBeFalsy();
+    });
+  });
+
+  describe('findAllExams', () => {
+    it('should return all exams', async () => {
+      const result = await toxicService.findAllExams();
+      expect(result).toHaveLength(examsMocked.length);
+    });
+  });
+
+  describe('findExamByCodigoAmostra', () => {
+    it('should return a exam by codigoAmostra', async () => {
+      const sample = examsMocked[0];
+      const result = await toxicService.findExamByCodigoAmostra(
+        sample.codigo_amostra,
+      );
+      expect(result).toEqual(sample);
+    });
+    it('should not return a exam for codigoAmostra not found', async () => {
+      try {
+        const result = await toxicService.findExamByCodigoAmostra('5');
+      } catch (err) {
+        expect(err).toBeDefined();
+      }
     });
   });
 });
