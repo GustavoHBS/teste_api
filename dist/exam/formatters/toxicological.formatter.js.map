@@ -1,0 +1,1 @@
+{"version":3,"file":"toxicological.formatter.js","sourceRoot":"","sources":["../../../src/exam/formatters/toxicological.formatter.ts"],"names":[],"mappings":";;;AAAA,sGAAiG;AAGjG,MAAa,mBAAmB;IAC9B,MAAM,CAAC,aAAa,CAClB,QAAmC;QAEnC,OAAO;YACL,OAAO,EAAE,QAAQ,CAAC,OAAO;YACzB,cAAc,EAAE,QAAQ,CAAC,cAAc;YACvC,eAAe,EAAE,QAAQ,CAAC,eAAe;SAC1C,CAAC;IACJ,CAAC;CACF;AAVD,kDAUC"}
