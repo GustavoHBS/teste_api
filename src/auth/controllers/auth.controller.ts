@@ -6,6 +6,7 @@ import {
   Body,
   Inject,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/base/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/base/guards/local-auth.guard';
 import { IAuthService } from '../services/authService.interface';
 import { IUsersService } from '../services/usersService.interface';
@@ -23,6 +24,7 @@ export class AuthController {
     return this.authService.login(req.user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('auth/create')
   async create(@Body() body) {
     return this.userService.create(body.username, body.password);
