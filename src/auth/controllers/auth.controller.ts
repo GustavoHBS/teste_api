@@ -5,6 +5,7 @@ import {
   UseGuards,
   Body,
   Inject,
+  Get,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/base/guards/jwt-auth.guard';
 import { LocalAuthGuard } from 'src/base/guards/local-auth.guard';
@@ -28,5 +29,12 @@ export class AuthController {
   @Post('auth/create')
   async create(@Body() body) {
     return this.userService.create(body.username, body.password);
+  }
+
+  @Get()
+  async isAlive() {
+    return {
+      message: 'The server is alive',
+    };
   }
 }
