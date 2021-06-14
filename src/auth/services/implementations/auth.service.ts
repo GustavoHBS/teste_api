@@ -20,8 +20,10 @@ export class AuthService {
 
   async login(user: UsersDocument) {
     const payload = { username: user.username, sub: user._id };
+    const MILISECONDS_CALC = 10;
     return {
       access_token: this.jwtService.sign(payload),
+      expiresIn: parseInt(process.env.EXPIRATION_SECONDS) * MILISECONDS_CALC,
     };
   }
 }
