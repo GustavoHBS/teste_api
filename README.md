@@ -19,7 +19,7 @@ Enviando um JSON com os campos:
 }</pre>
 Apos isso se os dados estiverem certos, a aplicação retornara um JSON com acess_token e o expires_in, o acess_Token é o token que deve ser utilizado nas outras rotas da aplicação como forma de autenticar a requisição e o expires_in o tempo maximo que aquele token será valido.</p>
 <br><h3>Criação de usuários</h3>
-<p>Nessa rota é possivel criar outros usuários para fazer o acesso a api, nela é enviada um post para a rota <pre>url/auth/crate</pre> junto de um json no corpo da requisição com as propriedades:
+<p>Nessa rota é possivel criar outros usuários para fazer o acesso a api, nela é enviada um post para a rota <pre>url/users/crate</pre> junto de um json no corpo da requisição com as propriedades:
 <pre>{
   "username": "",
   "password": ""
@@ -29,7 +29,23 @@ E dentro do header um authorization do tipo Bearer com o acess_token retornado n
 Todas as rotas dessa seção devem receber um Bearer token no header com o token recebido na requisição de login.
 <br><h3>Realizar exam toxigologico</h3>
 <p>Essa rota é responsável por fazer o processo em que ira receber um exame com os dados e ela ira processar para saber se foi encontrado algum tipo de droga de acordo com esses dados, a requisição é um POST para a url: <pre>url/exame/toxicological</pre> e ira receber um json com os seguintes valores:
- <pre> colocar os valores </pre> 
+ <pre>
+ {
+  codigo_amostra: string;
+  Cocaína: number;
+  Anfetamina: number;
+  Metanfetamina: number;
+  MDA: number;
+  MDMA: number;
+  THC: number;
+  Morfina: number;
+  Codeína: number;
+  Heroína: number;
+  Benzoilecgonina: number;
+  Cocaetileno: number;
+  Norcocaína: number;
+}
+</pre> 
  E com isso ela ira salvar esses valores no banco apos o processamento e retornara o codigo da amostra que foi enviado junto com uma propriedade informado se a amostra deu positivo ou negativo para o exame</p>
  <br><h3>Buscar todos os exames</h3>
 <p>Essa rota é responsável por buscar todos os exames ja feitos, ela é uma requisição que deve ser feita pelo metodo GET para a url:<pre>url/exame/toxicological</pre>E nela será retornado um array de objetos com os dados da amostra, junto do codigo e se ela deu positvo ou negativo para o teste</p>
